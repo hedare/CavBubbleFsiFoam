@@ -1,0 +1,17 @@
+#!/bin/bash 
+rm -R tmp
+mkdir tmp
+for proc in processor*
+do
+	mkdir tmp/$proc
+	for time in $proc/*
+	do
+		mkdir tmp/$time
+		cd tmp/$time
+		ln -s ../../../$time/solid/* .
+		cd ../../..
+	done
+done
+reconstructPar -region solid
+reconstructPar
+rm -R tmp

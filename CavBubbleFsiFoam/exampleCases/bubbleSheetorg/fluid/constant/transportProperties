@@ -1,0 +1,61 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.0                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      transportProperties;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+transportModel  Newtonian;
+nu              nu [0 2 -1 0 0 0 0] 1e-6;
+
+phase1 //water
+{
+    transportModel  Newtonian;
+    B               B [1 -1 -2 0 0 0 0] 3.036e8;
+    rho0            rho0 [1 -3 0 0 0 0 0] 998.2061;
+    rho             rho [1 -3 0 0 0 0 0] 998.2061;
+    p0              p0 [1 -1 -2 0 0 0 0] 101325;
+    gamma           gamma [0 0 0 0 0 0 0] 7.15;
+    mu              mu [1 -1 -1 0 0 0 0] 1e-3;
+    nu              nu [0 2 -1 0 0 0 0] 1e-6;
+}
+
+phase2 //air
+{
+    transportModel  Newtonian;
+    B               B [1 -1 -2 0 0 0 0] 0;
+    rho0            rho0 [1 -3 0 0 0 0 0] 0.12;
+    rho             rho [1 -3 0 0 0 0 0] 1;
+    p0              p0 [1 -1 -2 0 0 0 0] 10320;
+    gamma           gamma [0 0 0 0 0 0 0] 1.33;
+    mu              mu [1 -1 -1 0 0 0 0] 1.3e-5;
+    nu              nu [0 2 -1 0 0 0 0] 1.3e-5;
+}
+
+pMin           pMin [1 -1 -2 0 0 0 0] -1e11;
+pMinGas        pMinGas [1 -1 -2 0 0 0 0] 1000;
+pfact          pfact [0 0 0 0 0 0 0] 0.3;
+
+sigma           sigma [1 0 -2 0 0 0 0] 0.07;
+
+BubbleRadius    BubbleRadius [0 1 0 0 0 0 0] 28.8e-6;
+epsionBubble    epsionBubble [0 0 0 0 0 0 0] 3e-1; //to narrow the bubble interface
+BubbleCenter    BubbleCenter [0 1 0 0 0 0 0] (0 500e-6 0);
+
+pBubble         pBubble [ 1 -1 -2 0 0 0 0 ] 1687840999;
+pliquid         pliquid [ 1 -1 -2 0 0 0 0 ] 101325;
+
+epsDtB      epsDtB [0 2 0 0 0 0 0] 0e-12; //used to smear the bubble interface
+
+nu              nu [0 2 -1 0 0 0 0] 1e-6;
+
+// ************************************************************************* //

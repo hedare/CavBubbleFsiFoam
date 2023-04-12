@@ -1,0 +1,84 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.0                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      dynamicMeshDict;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dynamicFvMesh dynamicMotionSolverFvMesh;
+
+//twoDMotion      yes;
+
+solver velocityLaplacian;
+/*solver displacementLaplacian;
+
+displacementLaplacianCoeffs
+{
+diffusivity quadratic inverseDistance (interface);
+}
+
+frozenDiffusion on;
+
+movingPatches //distancePatches
+(
+    interface
+);
+
+staticPatches
+(
+);
+
+fixedPatches
+(
+    front
+    back
+    left
+    inlet
+    outlet
+    top
+    bottom
+);
+
+interpolation 
+{
+    function   TPS;
+    RBF    Gauss;
+}
+
+coarsening
+{
+    enabled    no;
+}
+
+coarseningRatio 1;
+includeStaticPatches yes;
+frozenInterpolation no;
+
+
+RBFMeshMotionSolver
+RBFMotionSolver
+displacementComponentLaplacian
+displacementInterpolation
+displacementLaplacian
+displacementSBRStress
+laplace
+mesquiteMotionSolver
+pseudoSolid
+refVelocityLaplacian
+velocityComponentLaplacian
+velocityLaplacian
+*/
+
+diffusivity quadratic inverseDistance (interface);
+
+
+// ************************************************************************* //
