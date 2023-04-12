@@ -1,0 +1,66 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.0                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    object      fvSchemes;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+ddtSchemes
+{
+    default Euler;
+}
+
+gradSchemes
+{
+    default Gauss linear;
+}
+
+divSchemes
+{
+    default         Gauss upwind;
+//    div(phi,U)   Gauss linearUpwind cellLimited Gauss linear 1;
+    div(phi,U)   Gauss linear;
+
+    div(phi_,alpha)  Gauss vanLeer;
+    div(phirb,alpha) Gauss linear; //interfaceCompression 1.0;
+}
+
+laplacianSchemes
+{
+    default         Gauss linear skewCorrected 1;
+    laplacian(nu,U) Gauss linear skewCorrected 1;
+    laplacian((mu|rho0),U) Gauss linear skewCorrected 1;
+    laplacian((1|A(U)),p) Gauss linear skewCorrected 1;
+    laplacian(diffusivity,cellMotionU) Gauss linear skewCorrected 1;
+    laplacian(epsDtB,alpha1) Gauss linear skewCorrected 1;
+}
+
+interpolationSchemes
+{
+    default linear;
+    interpolate(y) linear;
+    interpolate(U) skewCorrected linear;
+}
+
+snGradSchemes
+{
+    default         skewCorrected 1;
+}
+
+fluxRequired
+{
+    default         no;
+    p;
+}
+
+
+// ************************************************************************* //

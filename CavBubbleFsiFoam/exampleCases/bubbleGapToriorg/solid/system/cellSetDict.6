@@ -1,0 +1,33 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.0                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       dictionary;
+    location    "system";
+    object      cellSetDict.5;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+name            refineCells;
+
+action          new;
+
+topoSetSources
+(
+    boxToCell
+    {
+        p1       (310e-6 0 0); // start point on cylinder axis
+        p2       (310e-6 1e-3 0);   // end point on cylinder axis
+        radius   20e-6;
+    }
+);
+
+
+// ************************************************************************* //
