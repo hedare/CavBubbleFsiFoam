@@ -1,0 +1,61 @@
+# 1 "options"
+# 1 "<built-in>"
+# 1 "<command-line>"
+
+
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+
+# 17 "/usr/include/stdc-predef.h" 3 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# 2 "<command-line>" 2
+# 1 "options"
+c++WARN     = -Wno-deprecated -Wall -Wextra -Wno-unused-parameter -Wnon-virtual-dtor -Wunused-local-typedefs -Werror -Wredundant-decls -Wcast-align -Wmissing-declarations  -Wswitch-enum -Winvalid-pch -Wredundant-decls -Wformat=2 -Wmissing-format-attribute -Wformat-nonliteral
+
+EXE_INC = -std=c++11     -I../../fluidSolidInteraction/lnInclude     -I../../ThirdParty/eigen3     -I$(LIB_SRC)/finiteVolume/lnInclude     -I$(LIB_SRC)/transportModels     -I$(LIB_SRC)/transportModels/incompressible/lnInclude     -I$(LIB_SRC)/transportModels/interfaceProperties/lnInclude     -I$(LIB_SRC)/turbulenceModels/incompressible/turbulenceModel     -I$(LIB_SRC)/dynamicMesh/dynamicFvMesh/lnInclude     -I$(LIB_SRC)/meshTools/lnInclude     -I$(LIB_SRC)/tetFiniteElement/lnInclude
+# 14 "options"
+
+EXE_LIBS =     -linterfaceProperties     -lfiniteVolume     -lincompressibleTransportModels     -lincompressibleTurbulenceModel     -lincompressibleRASModels     -lincompressibleLESModels     -ldynamicFvMesh     -ldynamicMesh     -lmeshTools     -L$(FOAM_USER_LIBBIN)     -lfluidSolidInteraction     -llduSolvers
+# 28 "options"
+    
