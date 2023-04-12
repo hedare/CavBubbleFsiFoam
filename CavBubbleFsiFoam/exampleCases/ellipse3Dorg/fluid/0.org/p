@@ -1,0 +1,58 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | foam-extend: Open Source CFD                    |
+|  \\    /   O peration     | Version:     4.0                                |
+|   \\  /    A nd           | Web:         http://www.foam-extend.org         |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      p;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [1 -1 -2 0 0 0 0];
+
+internalField   uniform 101325;
+
+boundaryField
+{
+    interface
+    {
+        type zeroGradient;
+    }
+    outlet
+    {
+        //type extrapolatedPressure;
+        //value uniform 101325;
+        type            waveTransmissive;
+        field           p_rgh;
+        phi             phi;
+        rho             rho;
+        psi             psi1;
+        fieldInf        101325;
+        gamma           7.15; //1.006580313; //1.4;
+        lInf            1e-3;//0.0034;//1e-3;
+        value           uniform 101325;
+        inletOutlet     true;
+        correctSupercritical false;
+    }
+    top
+    {
+        type            zeroGradient;
+    }
+    bottom
+    {
+        type            symmetryPlane;
+    }
+    left
+    {
+        type            symmetryPlane;
+    }
+}
+
+
+// ************************************************************************* //
