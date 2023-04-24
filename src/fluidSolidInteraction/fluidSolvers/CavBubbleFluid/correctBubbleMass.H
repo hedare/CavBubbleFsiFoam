@@ -9,7 +9,7 @@
     {
     	if (bubblet > bubblet0)
     	{
-		if (bubbleV < bubbleV0)
+		if (bubbleV < bubbleV0 && bubblet > 1e-6)
 		{
 		    bubblePhase = 1;
 		    rho2 = rho2*pfact;
