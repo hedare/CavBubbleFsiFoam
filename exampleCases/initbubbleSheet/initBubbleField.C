@@ -103,9 +103,9 @@ int main(int argc, char *argv[])
         transportProperties.lookup("BubbleRadius")
     );
 
-    dimensionedScalar epsionBubble
+    dimensionedScalar epsilonBubble
     (
-        transportProperties.lookup("epsionBubble")
+        transportProperties.lookup("epsilonBubble")
     );
 
     dimensionedScalar pliquid
@@ -130,7 +130,7 @@ int main(int argc, char *argv[])
         scalar kb = magSqr((x[0]-BubbleCenter.value()[0])/BubbleRadius.value())+magSqr((x[1]-BubbleCenter.value()[1])/BubbleRadius.value())+magSqr((x[2]-BubbleCenter.value()[2])/BubbleRadius.value());
         //scalar kb = magSqr((x[0]-BubbleCenter.value()[0])/BubbleRadius.value())+magSqr((x[2]-BubbleCenter.value()[2])/BubbleRadius.value());
         
-        alphaBubble[cellI] = (1-Foam::tanh((kb-1)/epsionBubble.value()))/2;
+        alphaBubble[cellI] = (1-Foam::tanh((kb-1)/epsilonBubble.value()))/2;
     }
 
 
