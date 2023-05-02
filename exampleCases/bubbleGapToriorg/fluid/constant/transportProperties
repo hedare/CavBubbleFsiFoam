@@ -44,7 +44,7 @@ pfact          pfact [0 0 0 0 0 0 0] 1;
 sigma           sigma [1 0 -2 0 0 0 0] 0.07;
 
 BubbleRadius    BubbleRadius  [0 1 0 0 0 0 0] 12.5e-6;
-epsionBubble    epsionBubble  [0 0 0 0 0 0 0] 1e-12; //to narrow the bubble interface
+epsilonBubble   epsilonBubble  [0 0 0 0 0 0 0] 1e-12; //to narrow the bubble interface
 BubbleCenter    BubbleCenter  [0 1 0 0 0 0 0] (0 0 0);
 
 BubbleRadius2    BubbleRadius2  [0 1 0 0 0 0 0] 0.2e-6;

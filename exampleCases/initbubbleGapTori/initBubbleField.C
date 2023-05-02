@@ -103,9 +103,9 @@ int main(int argc, char *argv[])
         transportProperties.lookup("BubbleRadius")
     );
 
-    dimensionedScalar epsionBubble
+    dimensionedScalar epsilonBubble
     (
-        transportProperties.lookup("epsionBubble")
+        transportProperties.lookup("epsilonBubble")
     );
 
     dimensionedScalar pliquid
