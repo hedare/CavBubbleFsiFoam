@@ -29,8 +29,6 @@ runApplication -l log.blockMesh.solid blockMesh -case ../solid
 runApplication -l log.setSet.solid setSet -case ../solid -batch ../solid/setBatch
 runApplication -l log.setToZones.solid setsToZones -case ../solid -noFlipMap
 
-runApplication -l log.decomposePar.solid decomposePar -case ../solid -cellDist
-
 runApplication blockMesh
 
 refineMeshByCellSet 1 2 3 4
@@ -45,6 +43,7 @@ sed -i 's/value           uniform 1/value           uniform 0/' 0/alpha1
 runApplication ../../initEllipse3D/initbubble
 sed -i 's/value           uniform 0/value           uniform 1/' 0/alpha1
 
+runApplication -l log.decomposePar.solid decomposePar -case ../solid -cellDist
 runApplication decomposePar -cellDist
 
 cd ..
