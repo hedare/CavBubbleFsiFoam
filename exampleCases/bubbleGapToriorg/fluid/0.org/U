@@ -30,11 +30,6 @@ boundaryField
         type            pressureInletOutletVelocity;
         value           uniform (0 0 0);
     }
-    inlet
-    {
-        type            pressureInletOutletVelocity;
-        value           uniform (0 0 0);
-    }
     top
     {
         type            symmetryPlane;

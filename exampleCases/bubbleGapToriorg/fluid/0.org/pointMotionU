@@ -29,10 +29,6 @@ boundaryField
     {
         type            slip;
     }
-    inlet
-    {
-        type            slip;
-    }
     top
     {
         type            symmetryPlane;

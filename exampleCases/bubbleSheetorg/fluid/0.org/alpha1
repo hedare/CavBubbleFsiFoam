@@ -21,19 +21,11 @@ internalField   uniform 1;
 
 boundaryField
 {
-    inlet
-    {
-        type            zeroGradient;
-    }
     left
     {
         type            symmetryPlane;
     }
-    outlet
-    {
-        type            zeroGradient;
-    }
-    top
+    outside
     {
         type            zeroGradient;
     }

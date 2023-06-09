@@ -128,7 +128,6 @@ int main(int argc, char *argv[])
     	vector x = mesh.C()[cellI];
 
         scalar kb = magSqr((x[0]-BubbleCenter.value()[0])/BubbleRadius.value())+magSqr((x[1]-BubbleCenter.value()[1])/BubbleRadius.value())+magSqr((x[2]-BubbleCenter.value()[2])/BubbleRadius.value());
-        //scalar kb = magSqr((x[0]-BubbleCenter.value()[0])/BubbleRadius.value())+magSqr((x[2]-BubbleCenter.value()[2])/BubbleRadius.value());
         
         alphaBubble[cellI] = (1-Foam::tanh((kb-1)/epsilonBubble.value()))/2;
     }
@@ -149,7 +148,6 @@ int main(int argc, char *argv[])
     	vector x = mesh.C()[cellI];
 
         scalar kb = magSqr((x[0]-BubbleCenter.value()[0])/BubbleRadius.value())+magSqr((x[1]-BubbleCenter.value()[1])/BubbleRadius.value())+magSqr((x[2]-BubbleCenter.value()[2])/BubbleRadius.value());
-        //scalar kb = magSqr((x[0]-BubbleCenter.value()[0])/BubbleRadius.value())+magSqr((x[2]-BubbleCenter.value()[2])/BubbleRadius.value());
         
         if (kb > 2 || x[1] < -100e-6)
         {
@@ -162,23 +160,12 @@ int main(int argc, char *argv[])
     forAll(alpha1, cellI)
     {
     	vector x = mesh.C()[cellI];
-        if (x[1] < -0e-6)// || x[1] > 1e-3)
+        if (x[1] < -0e-6)
         {
             alphaBubble[cellI] = 1.0;
-        }// else {
-        //    alphaBubble[cellI] = 0.0;
-        //}
+        }
     }
     alpha1 = max(min(1.0-alphaBubble,1.0),0.0);
-    
-    /*forAll(alpha1, cellI)
-    {
-    	vector x = mesh.C()[cellI];
-        if (x[1] < 0)
-        {
-            alpha1[cellI] = 0;
-        }
-    }*/
          
     alpha1.write();
 

@@ -154,7 +154,7 @@ int main(int argc, char *argv[])
         scalar radius = Foam::sqrt(magSqr(BubbleRadius.value()[0]*Foam::cos(phi))+magSqr(BubbleRadius.value()[2]*Foam::sin(phi)));
         scalar kb = magSqr((Foam::sqrt(magSqr(x[0])+magSqr(x[2]))-center)/radius)+magSqr((x[1]-BubbleCenter.value()[1])/BubbleRadius.value()[1]);
         
-        if (kb > 2 || x[1] < -100e-6) //magSqr((x[1]-BubbleCenter.value()[1])/BubbleRadius.value()[1]) > 1)
+        if (kb > 2 || x[1] < -100e-6)
         {
             alphaBubble[cellI] = 0.0;
         }
@@ -165,23 +165,13 @@ int main(int argc, char *argv[])
     forAll(alpha1, cellI)
     {
     	vector x = mesh.C()[cellI];
-        if (x[1] < -0e-6)// || x[1] > 1e-3)
+        if (x[1] < -0e-6)
         {
             alphaBubble[cellI] = 1.0;
-        }// else {
-        //    alphaBubble[cellI] = 0.0;
-        //}
+        }
     }
     alpha1 = max(min(1.0-alphaBubble,1.0),0.0);
-    
-    /*forAll(alpha1, cellI)
-    {
-    	vector x = mesh.C()[cellI];
-        if (x[1] < 0)
-        {
-            alpha1[cellI] = 0;
-        }
-    }*/
+    }
          
     alpha1.write();
 

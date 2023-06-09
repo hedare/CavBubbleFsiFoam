@@ -25,15 +25,7 @@ boundaryField
         type            fixedValue;
         value           uniform (0 0 0);
     }
-    outlet
-    {
-        type            slip;
-    }
-    inlet
-    {
-        type            slip;
-    }
-    top
+    outside
     {
         type            slip;
     }

@@ -25,17 +25,7 @@ boundaryField
         type            movingWallVelocity;
         value           uniform (0 0 0);
     }
-    outlet
-    {
-        type            pressureInletOutletVelocity;
-        value           uniform (0 0 0);
-    }
-    inlet
-    {
-        type            pressureInletOutletVelocity;
-        value           uniform (0 0 0);
-    }
-    top
+    outside
     {
         type            pressureInletOutletVelocity;
         value           uniform (0 0 0);
