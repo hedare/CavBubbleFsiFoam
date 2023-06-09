@@ -1559,6 +1559,22 @@ bool CavBubbleSolid::writeObject
             solidProperties().lookup("nonLinear")
         );
 
+// meshPhi must be present in order to reconstruction procedure works
+    surfaceScalarField meshPhi
+    (
+        IOobject
+        (
+            "meshPhi",
+            runTime().timeName(),
+            mesh(),
+            IOobject::NO_READ,
+            IOobject::AUTO_WRITE
+        ),
+        mesh(),
+        dimensionedScalar("0", dimVolume/dimTime, 0.0)
+    );
+    meshPhi.write();
+
     if (moveMesh)
     {
         pointIOField curPoints
@@ -1659,22 +1675,6 @@ bool CavBubbleSolid::writeObject
         twoDCorrector.correctPoints(curPoints);
 
         curPoints.write();
-
-        // meshPhi must be present in order to reconstruction procedure works
-        surfaceScalarField meshPhi
-        (
-            IOobject
-            (
-                "meshPhi",
-                runTime().timeName(),
-                mesh(),
-                IOobject::NO_READ,
-                IOobject::AUTO_WRITE
-            ),
-            mesh(),
-            dimensionedScalar("0", dimVolume/dimTime, 0.0)
-        );
-        meshPhi.write();
     }
 
     // Calculate equivalent stress
