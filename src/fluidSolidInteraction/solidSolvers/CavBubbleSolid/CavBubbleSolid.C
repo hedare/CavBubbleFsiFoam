@@ -222,8 +222,6 @@ CavBubbleSolid::CavBubbleSolid(const fvMesh& mesh)
     alphafPtr_(NULL)
 {
     pointD_.oldTime();
-//     D_.oldTime();
-//     U_.oldTime();
 
     if (rheology_.law().type() == multiMaterial::typeName)
     {
@@ -234,19 +232,14 @@ CavBubbleSolid::CavBubbleSolid(const fvMesh& mesh)
     {
         muf_ = interface()->interpolate(mu_);
         lambdaf_ = interface()->interpolate(lambda_);
-
-//         interface()->modifyProperty(muf_);
-//         interface()->modifyProperty(lambdaf_);
     }
 
     if (interface().valid())
     {
-//         interface()->updateDisplacement(pointD_); // restart issue
         interface()->updateDisplacementGradient(gradD_, gradDf_);
     }
     else
     {
-//         volToPoint_.interpolate(D_, pointD_);  // restart issue
         gradD_ = fvc::cellLimitedGrad(D_, pointD_, 0);
         gradDf_ = fvc::fGrad(D_, pointD_);
     }
@@ -515,7 +508,6 @@ tmp<Foam::vectorField> CavBubbleSolid::patchFaceAcceleration
     );
 
      volVectorField a = fvc::d2dt2(D_);
-//      volVectorField a = fvc::ddt(U_);
 
     tAcceleration() = a.boundaryField()[patchID];
 
@@ -540,7 +532,6 @@ tmp<vectorField> CavBubbleSolid::faceZoneAcceleration
     vectorField& acceleration = tAcceleration();
 
     volVectorField a = fvc::d2dt2(D_);
-//     volVectorField a = fvc::ddt(U_);
 
     vectorField patchAcceleration = a.boundaryField()[patchID];
 
@@ -590,35 +581,6 @@ tmp<vectorField> CavBubbleSolid::faceZoneVelocity
 
     // Parallel data exchange: collect pressure field on all processors
     reduce(velocity, sumOp<vectorField>());
-
-
-//     const vectorField& patchVelocity = U_.boundaryField()[patchID];
-
-//     label globalZoneIndex = findIndex(globalFaceZones(), zoneID);
-
-//     if (globalZoneIndex != -1)
-//     {
-//         // global face zone
-
-//         const label patchStart =
-//             mesh().boundaryMesh()[patchID].start();
-
-//         forAll(patchVelocity, i)
-//         {
-//             velocity
-//             [
-//                 mesh().faceZones()[zoneID].whichFace(patchStart + i)
-//             ] =
-//                 patchVelocity[i];
-//         }
-
-//         // Parallel data exchange: collect field on all processors
-//         reduce(velocity, sumOp<vectorField>());
-//     }
-//     else
-//     {
-//         velocity = patchVelocity;
-//     }
 
     return tVelocity;
 }
@@ -1181,13 +1143,6 @@ bool CavBubbleSolid::evolve()
             readScalar(solidProperties().lookup("relConvergenceTolerance"));
     }
 
-    // componentReferenceList cr
-    // (
-    //     solidProperties().lookup("componentReference"),
-    //     componentReference::iNew(mesh())
-    // );
-
-
     // Non-linear
     nonLinearGeometry::nonLinearType nonLinear =
         nonLinearGeometry::nonLinearNames_.read
@@ -1235,11 +1190,6 @@ bool CavBubbleSolid::evolve()
 
     lduMatrix::debug = debug;
     blockLduMatrix::debug = debug;
-    // lduSolverPerformance::debug = debug;
-
-//     label DRefCell = 0;
-//     vector DRefValue = vector::zero;
-//     setRefCellVector(D_, solidProperties(), DRefCell, DRefValue);
 
     OFstream* resFilePtr = NULL;
     if (lduMatrix::debug && runTime().outputTime())
@@ -1258,22 +1208,6 @@ bool CavBubbleSolid::evolve()
         }
 
         D_.storePrevIter();
-
-//         // Demirdzic-Muzaferija
-//         fvVectorMatrix DEqn
-//         (
-//             rho_*fvm::d2dt2(D_)
-//          == fvm::laplacian(muf_, D_, "laplacian(DD,D)")
-//           + fvc::div
-//             (
-//                 mesh().Sf()
-//               & (
-//                     muf_*gradDf_.T()
-//                   + lambdaf_*(I*tr(gradDf_))
-//                 )
-//             )
-//           + rho_*bodyForce()
-//         );
 
         fvVectorMatrix DEqn
         (
@@ -1327,25 +1261,10 @@ bool CavBubbleSolid::evolve()
             interface()->correct(DEqn);
         }
 
-        // forAll (cr, crI)
-        // {
-        //     DEqn.setComponentReference
-        //     (
-        //         cr[crI].patchIndex(),
-        //         cr[crI].faceIndex(),
-        //         cr[crI].dir(),
-        //         cr[crI].value()
-        //     );
-        // }
-
         if (mesh().solutionDict().relaxEquation(D_.name()))
         {
             DEqn.relax(mesh().solutionDict().fieldRelaxationFactor(D_.name()));
         }
-        // else
-        // {
-        //     DEqn.relax(1);
-        // }
 
         solverPerf = DEqn.solve();
 
@@ -1471,7 +1390,6 @@ bool CavBubbleSolid::evolve()
         << ", enforceLinear = " << enforceLinear << endl;
 
     lduMatrix::debug = 1;
-    // lduSolverPerformance::debug = 1;
     blockLduMatrix::debug = 1;
 
 
@@ -1546,8 +1464,6 @@ void CavBubbleSolid::predict()
         gradD_ = fvc::grad(D_, pointD_);
         gradDf_ = fvc::fGrad(D_, pointD_);
     }
-
-//     D_.correctBoundaryConditions();
 }
 
 
@@ -1576,9 +1492,6 @@ void CavBubbleSolid::updateFields()
     {
         muf_ = interface()->interpolate(mu_);
         lambdaf_ = interface()->interpolate(lambda_);
-
-//         interface()->modifyProperty(muf_);
-//         interface()->modifyProperty(lambdaf_);
     }
 
     nonLinearGeometry::nonLinearType nonLinear =
@@ -1586,7 +1499,6 @@ void CavBubbleSolid::updateFields()
         (
             solidProperties().lookup("nonLinear")
         );
-//     Switch nonLinear(solidProperties().lookup("nonLinear"));
 
     // Calculate second Piola-Kirchhoff stress
     {
@@ -1639,7 +1551,6 @@ bool CavBubbleSolid::writeObject
     IOstream::compressionType
 ) const
 {
-    // Switch moveMesh(solidProperties().lookup("moveMesh"));
     Switch moveMesh(false);
 
     nonLinearGeometry::nonLinearType nonLinear =
@@ -1647,7 +1558,6 @@ bool CavBubbleSolid::writeObject
         (
             solidProperties().lookup("nonLinear")
         );
-//     Switch nonLinear(solidProperties().lookup("nonLinear"));
 
     if (moveMesh)
     {
@@ -1869,132 +1779,7 @@ bool CavBubbleSolid::writeObject
                 cmptPointSigma.internalField()
             );
         }
-
-//         pointTensorField pointEigenVector
-//         (
-//             IOobject
-//             (
-//                 "pointEigenVector",
-//                 runTime().timeName(),
-//                 mesh(),
-//                 IOobject::NO_READ,
-//                 IOobject::NO_WRITE
-//             ),
-//             pMesh_,
-//             dimensioned<tensor>("0", dimless, tensor::zero)
-//         );
-
-//         pointVectorField pointEigenValue
-//         (
-//             IOobject
-//             (
-//                 "pointEigenValue",
-//                 runTime().timeName(),
-//                 mesh(),
-//                 IOobject::NO_READ,
-//                 IOobject::AUTO_WRITE
-//             ),
-//             pMesh_,
-//             dimensioned<vector>("0", sigma_.dimensions(), vector::zero)
-//         );
-
-//         eig3Field(pointSigma, pointEigenVector, pointEigenValue);
-
-//         pointVectorField pointEigenVector0
-//         (
-//             IOobject
-//             (
-//                 "pointEigenVector0",
-//                 runTime().timeName(),
-//                 mesh(),
-//                 IOobject::NO_READ,
-//                 IOobject::AUTO_WRITE
-//             ),
-//             pMesh_,
-//             dimensioned<vector>("0", dimless, vector::zero)
-//         );
-
-//         pointEigenVector0.internalField().replace
-//         (
-//             0, //vector::X,
-//             pointEigenVector.internalField().component(0)
-//         );
-//         pointEigenVector0.internalField().replace
-//         (
-//             1, //vector::Y,
-//             pointEigenVector.internalField().component(1)
-//         );
-//         pointEigenVector0.internalField().replace
-//         (
-//             2, //vector::Z,
-//             pointEigenVector.internalField().component(2)
-//         );
-
-//         pointVectorField pointEigenVector1
-//         (
-//             IOobject
-//             (
-//                 "pointEigenVector1",
-//                 runTime().timeName(),
-//                 mesh(),
-//                 IOobject::NO_READ,
-//                 IOobject::AUTO_WRITE
-//             ),
-//             pMesh_,
-//             dimensioned<vector>("0", dimless, vector::zero)
-//         );
-
-//         pointEigenVector1.internalField().replace
-//         (
-//             0, //vector::X,
-//             pointEigenVector.internalField().component(3)
-//         );
-//         pointEigenVector1.internalField().replace
-//         (
-//             1, //vector::Y,
-//             pointEigenVector.internalField().component(4)
-//         );
-//         pointEigenVector1.internalField().replace
-//         (
-//             2, //vector::Z,
-//             pointEigenVector.internalField().component(5)
-//         );
-
-//         pointVectorField pointEigenVector2
-//         (
-//             IOobject
-//             (
-//                 "pointEigenVector2",
-//                 runTime().timeName(),
-//                 mesh(),
-//                 IOobject::NO_READ,
-//                 IOobject::AUTO_WRITE
-//             ),
-//             pMesh_,
-//             dimensioned<vector>("0", dimless, vector::zero)
-//         );
-
-//         pointEigenVector2.internalField().replace
-//         (
-//             0, //vector::X,
-//             pointEigenVector.internalField().component(6)
-//         );
-//         pointEigenVector2.internalField().replace
-//         (
-//             1, //vector::Y,
-//             pointEigenVector.internalField().component(7)
-//         );
-//         pointEigenVector2.internalField().replace
-//         (
-//             2, //vector::Z,
-//             pointEigenVector.internalField().component(8)
-//         );
-
         pointSigma.write();
-//         pointEigenValue.write();
-//         pointEigenVector0.write();
-//         pointEigenVector1.write();
-//         pointEigenVector2.write();
     }
 
     // Write cell and point hydrostatic pressure field
@@ -2023,34 +1808,12 @@ bool CavBubbleSolid::writeObject
 
 const surfaceScalarField& CavBubbleSolid::DTf() const
 {
-//     if (!DTfPtr_)
-//     {
-//         DTfPtr_ =
-//             const_cast<surfaceScalarField*>
-//             (
-//                 &mesh().lookupObject<surfaceScalarField>("DTf")
-//             );
-//     }
-
-//     return *DTfPtr_;
-
     return mesh().lookupObject<surfaceScalarField>("DTf");
 }
 
 
 const volScalarField& CavBubbleSolid::DT() const
 {
-//     if (!DTPtr_)
-//     {
-//         DTPtr_ =
-//             const_cast<volScalarField*>
-//             (
-//                 &mesh().lookupObject<volScalarField>("DT")
-//             );
-//     }
-
-//     return *DTPtr_;
-
     return mesh().lookupObject<volScalarField>("DT");
 }
 

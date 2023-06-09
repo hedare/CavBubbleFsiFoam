@@ -19,14 +19,7 @@
 		bubbleV0 = bubbleV;
 		bubblet0 = bubblet;
 	}
-    }/* else if (bubblePhase == 1)
-    {
-        if (bubbleV > bubbleV0)
-        {
-            bubblePhase = 2;
-        }
-        bubbleV0 = bubbleV;
-    }*/
+    }
     p_g = (p20 + B2) * pow(rho2/rho20 , gamma2 ) - B2;
     prho = max(alpha1*prho + alpha2*p_g, pMin); // + rho*gh, pMin);
     rho2 = rho20*pow(((max(prho,pMinGas)+B2)/(p20+B2)),1/gamma2);

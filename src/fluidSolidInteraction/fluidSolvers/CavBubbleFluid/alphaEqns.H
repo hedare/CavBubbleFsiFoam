@@ -43,24 +43,6 @@
                 Sp[celli] += dgdt[celli]*(1.0 - alpha1[celli]);
             }
         }
-        
-        /*if (cavModel)
-        {
-        dimensionedScalar cavSourceUnit("cavSourceUnit",dimPressure*dimTime, 1.0);
-            volScalarField cavSource
-            (
-                IOobject
-                (
-                    "cavSource",
-                    runTime().timeName(),
-                    mesh
-                ),
-                (prho-pSat)*rho2/rhoField*pow(rho1*pos(prho-pSat),-1/2)*pow(alpha2*pow(alpha1,2),1/3)*pow(6,1/2)*pow(4*3.14159265358979*nSeed/3,1/3)/cavSourceUnit
-            );
-            
-	    Su += cavSource;
-	    Sp -= cavSource;
-	}*/
 
         surfaceScalarField phiAlpha1 =
             fvc::flux
@@ -81,11 +63,6 @@
         surfaceScalarField rho1f = fvc::interpolate(rho1);
         surfaceScalarField rho2f = fvc::interpolate(rho2);
         rhoPhi = phiAlpha1*(rho1f - rho2f) + phi_*rho2f;
-
-        /*if (!cavModel)
-        {
-            alpha0 = 0.0;
-        }*/
         
         if (limitAlpha > 0.0)
         {
@@ -94,7 +71,7 @@
             scalar limitAlpha2 = max(1 - (1-limitAlpha)*runTime().deltaT().value()/3e-9,limitAlpha);//weaker for smaller dt
                 forAll(alpha1, celli)
                 {
-                    if (alpha1[celli] > limitAlpha2) {alpha1[celli] = 1.0;}// - alpha0;}
+                    if (alpha1[celli] > limitAlpha2) {alpha1[celli] = 1.0;}
                     else if (alpha1[celli] < 1 - limitAlpha2) {alpha1[celli] = 0.0;}
                 }
             }

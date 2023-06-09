@@ -34,7 +34,6 @@ Description
 if (adjustTimeStep)
 {
     scalar maxDeltaTFact = maxCo/(CoNum + SMALL);
-        //min(maxCo/(CoNum + SMALL), maxAcousticCo/(acousticCoNum + SMALL));
 
     scalar deltaTFact = min(min(maxDeltaTFact, 1.0 + 0.1*maxDeltaTFact), 1.2);
 

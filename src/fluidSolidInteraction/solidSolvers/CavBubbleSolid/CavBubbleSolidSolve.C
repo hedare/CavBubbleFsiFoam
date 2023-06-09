@@ -127,21 +127,6 @@ tmp<volVectorField> CavBubbleSolid::residual
 
     tResidual().internalField() = DEqn.residual();
 
-
-//     // Boundary residual
-
-//     D_.storePrevIter();
-//     D_.boundaryField().evaluate();
-
-//     forAll(tResidual().boundaryField(), patchI)
-//     {
-//         tResidual().boundaryField()[patchI] =
-//             D_.prevIter().boundaryField()[patchI]
-//           - D_.boundaryField()[patchI];
-//     }
-
-//     D_ = D_.prevIter();
-
     return tResidual;
 }
 
@@ -273,7 +258,6 @@ void CavBubbleSolid::initialise
             }
         }
         while ( (residual > 1e-10) && (++iCorr<=50) );
-//         while (++iCorr<=50);
 
         gradDf_ = fvc::fGrad(D_, pointD_);
 
@@ -368,11 +352,6 @@ scalar CavBubbleSolid::smooth
         DEqn += source;
 
         solverPerf = DEqn.solve();
-
-//         forAll(D_.boundaryField(), patchI)
-//         {
-//             D_.boundaryField()[patchI] += source.boundaryField()[patchI];
-//         }
 
         if (iCorr == 0)
         {

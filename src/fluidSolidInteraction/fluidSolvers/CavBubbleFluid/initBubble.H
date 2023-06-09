@@ -80,7 +80,6 @@ if (runTime().value() >= Tinit.value() && secondBubbleInfo <= runTime().value() 
         }
     }
 
-    //alpha1 = max(min(1.0-alphaBubble,1.0),0.0);
     alpha2 = max(min(alpha2 + alphaBubble,1.0),0.0);
     alpha1 = 1.0 - alpha2;
     prho = prho + pBubble*alphaBubble;

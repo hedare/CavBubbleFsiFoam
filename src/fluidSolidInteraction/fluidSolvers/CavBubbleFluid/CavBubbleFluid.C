@@ -97,10 +97,6 @@ CavBubbleFluid::CavBubbleFluid(const fvMesh& mesh)
     pMin(transportProperties_.lookup("pMin")),
     pMinGas(transportProperties_.lookup("pMinGas")),
     pfact(transportProperties_.lookup("pfact")),
-    /*pSat(transportProperties_.lookup("pSat")),
-    nSeed(transportProperties_.lookup("nSeed")),
-    dNuc(transportProperties_.lookup("dNuc")),
-    alpha0(1.0/(1.0/(nSeed.value()*4/3*3.14159265358979*pow(dNuc.value(),3))+1.0)),*/
     sigma(transportProperties_.lookup("sigma")),
     nu_(mu1/rho10),
     rho_(rho10),

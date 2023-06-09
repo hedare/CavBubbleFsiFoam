@@ -102,10 +102,6 @@ class CavBubbleFluid
         dimensionedScalar pMin;
         dimensionedScalar pMinGas;
         dimensionedScalar pfact;
-        /*dimensionedScalar pSat;
-        dimensionedScalar nSeed;
-        dimensionedScalar dNuc;
-        scalar alpha0;*/
         dimensionedScalar sigma;
 
         //- Kinematic viscosity, density

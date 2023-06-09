@@ -65,9 +65,6 @@ public:
         const scalar&
     ) const
     {
-        // Quadratic compression scheme
-        // return min(max(4*min(phiP*(1 - phiP), phiN*(1 - phiN)), 0), 1);
-
         // Quartic compression scheme
         return
             min
