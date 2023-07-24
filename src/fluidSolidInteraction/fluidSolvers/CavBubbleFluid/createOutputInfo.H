@@ -4,6 +4,6 @@ bubblem0 = Foam::gSum(mesh.V()*alpha2rho.field());
 infovstime << "%Time,bubbleVolume,bubblepressure,bubblemass" << nl;
 infovstime << runTime().timeName()<<","
            << bubbleV0 << ","
-           << Foam::gSum(mesh.V()*alpha2p.field()) << ","
+           << Foam::gSum(mesh.V()*alpha2p.field())/bubbleV0 << ","
            << bubblem0 << nl;
 infovstime.flush();
