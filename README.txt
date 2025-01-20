@@ -1,5 +1,6 @@
 This solver is based on the OpenFOAM solver fsiFoam, as modified by Hendrik Reese.
 Its purpose is to model the first oscillation cycles of a single laser-induced cavitation bubble near a elastic boundary.
+The development of this solver was funded by the German Research Foundation (Deutsche Forschungsgemeinschaft, DFG) under contract OH 74/3-1.
 
 To run a simulation, one must first properly install foam-extend-4.0
 
